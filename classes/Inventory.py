@@ -3,8 +3,8 @@ class Movie:
     def __init__(self,id,title,copies_available):
         self.id=id
         self.title=title
-        self.copies = copies_available
-        
+        self.copies_available = copies_available
+
     @classmethod
     def all_movies(cls):
         invetory =[]

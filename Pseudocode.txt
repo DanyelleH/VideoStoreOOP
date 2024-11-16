@@ -1,0 +1,41 @@
+Pseudocode:
+Classes:
+    -Customers
+        import csv
+    -Invetory
+        import csv
+
+     - Video Store
+        def access_invetory(self):
+            return title and available_copies
+
+        def view_all_customers(self:
+            return customer_id and first_name , last_name
+
+        def customers_current_rentals(customer_id as input,)
+            return the names of the movies rented by the user, seperated by the "/".
+    
+        def new_customer()
+            take in infoo to write into the csv file at the end, generating an id +1 of the previous customer.
+                to prevent a duplicate id, should the id be a private variable?
+    
+        def rent_video(video_title, Customer_id):
+            check if the customer has reacher their maximum rentals.
+            if not, add that title to their current rentals, and decrement the numer of copies available in the inventory.
+                if account type = sx:
+                    if current rentals length > 0:
+                        proceed 
+                    else:
+                        upgrade account or return previous movie.
+                if account type px:
+                    if current_rentals <3:
+                        proceed
+                    else:
+                        return a movie.
+
+        def return_video(video_title, customer_id):
+            increment the invetory for the video title, remove the title from the customers rentals.
+                    
+        def available_movies(self):
+            returns title and copies available.
+        
