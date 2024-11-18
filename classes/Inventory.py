@@ -7,7 +7,7 @@ class Movie:
 
     @classmethod
     def all_movies(cls):
-        invetory ={}
+        inventory ={}
         with open("/Users/danyelleridley/GolfPlatoonImmersive/Module_1_Fundamentals/assessment-2/data/inventory.csv") as invetory_file:
             reader = csv.DictReader(invetory_file)
             for row in reader:
@@ -17,14 +17,14 @@ class Movie:
                     #use integer to increment/decrement later
                     copies_available = int(row["copies_available"])
                 )
-                invetory[row["title"]] = movie
-        return invetory
+                inventory[row["title"]] = movie
+        return inventory
     
     def save_to_inventory_csv(self):
         with open("/Users/danyelleridley/GolfPlatoonImmersive/Module_1_Fundamentals/assessment-2/data/inventory.csv", mode="w", newline='') as inventory_file:
             writer = csv.writer(inventory_file)
             writer.writerow(["id","title","copies_available"])
-            for title, movie in self.all_movies():
+            for title, movie in self.inventory.items():
                 writer.writerow([
                     movie.id,
                     title,

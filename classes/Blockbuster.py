@@ -46,6 +46,9 @@ class VideoStore(Customer,Movie):
          
         #Formatted input so user can see the titles available to be rented
         video_title = input(f"Titles Available : {self.available_movies()}")
+        if video_title not in self.available_movies():
+            print(f"No copies of {video_title} available")
+            return
         customer =self.customers[customer_id]
         
         current_rentals = (customer.current_video_rentals)
@@ -54,6 +57,7 @@ class VideoStore(Customer,Movie):
             if len(current_rentals) == 1 and current_rentals[0]== "":
                 print(f"{customer.firstName} is now renting {video_title}")
                 customer.current_video_rentals = [video_title]
+                self.inventory[video_title].copies_available -=1
             else:
                 print(f"Return {customer.current_video_rentals} before renting another title")
                 
@@ -62,33 +66,41 @@ class VideoStore(Customer,Movie):
                 if current_rentals[0]== '':
                     customer.current_video_rentals= [video_title]
                     print(f"{customer.firstName} is now renting {video_title}, all titles currently rented are {customer.current_video_rentals}")
-    
+                    self.inventory[video_title].copies_available -=1
+
                 else:
                     customer.current_video_rentals = customer.current_video_rentals + [video_title]
                     print(f"{customer.firstName} is now renting {video_title}, all titles currently rented are {customer.current_video_rentals}")
             else:
                 print(f"Return one of the following titles before renting another: {customer.current_video_rentals}")
+
                 '''
                 Add method to update csv file with users current rentals
                 '''
         self.save_to_customer_csv(customer)
+        self.save_to_inventory_csv()
 
     def return_video(self,video_title=input, customer_id=input):
         customer_id = input("Enter Customers ID: ")
         video_title=input("What title is being returned? ")
-        if video_title in self.inventory:
+        formatted_title = video_title.title()
+        if formatted_title in self.inventory:
            # increment the invetory for the video title
-            self.inventory[video_title].copies_available +=1
+            self.inventory[formatted_title].copies_available +=1
         #Note to self: Figure out how to catch all versions of walle ( WALL-E, wall-E etc) 
 
-            if video_title.title() in self.customers[customer_id].current_video_rentals:
+            if formatted_title in self.customers[customer_id].current_video_rentals:
                 #remove the title from the customers rentals.
-                self.customers[customer_id].current_video_rentals.remove(video_title.title())
-                print(f"{video_title} was returned by {self.customers[customer_id].firstName} and they are still in posession of the following titles: {self.customers[customer_id].current_video_rentals}")
+                self.customers[customer_id].current_video_rentals.remove(formatted_title)
+                print(f"{formatted_title} was returned by {self.customers[customer_id].firstName} and they are still in posession of the following titles: {self.customers[customer_id].current_video_rentals}")
             else:
                 print( "Title not found in Customers current Rentals")
         else: 
             print(f"{video_title} not Found in Inventory")
+       
+
+        self.save_to_customer_csv(self.customers[customer_id])
+        self.save_to_inventory_csv()
     
     def available_movies(self):
         available_movies = []
