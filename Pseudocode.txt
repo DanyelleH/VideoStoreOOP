@@ -1,5 +1,5 @@
 This file shows my initial thoughts while reading through the readme to get an idea of the layout.
-Throughout the project 've made comments where changes/improvements in this process were made.
+Throughout the project I've made comments as i went to show where changes/improvements in this process were made.
 
 Pseudocode:
 Classes:

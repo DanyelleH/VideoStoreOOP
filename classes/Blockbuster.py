@@ -5,7 +5,8 @@ import csv
 class VideoStore:
     def __init__(self) -> None:
         self.customers = Customer.all_customers() # Key: Customer id Number  value: Customer object.
-        self.inventory = Movie.all_movies() # Key: Movie Title   Value: Mobie object
+        self.inventory = Movie.all_movies() # Key: Movie Title   Value: Movie object
+        print("Welcome to Blockbuster! these are the menu options: ")
 
     def view_invetory(self):
         for title,movie in self.inventory.items():
@@ -20,7 +21,10 @@ class VideoStore:
         customer =self.customers.get(customer_id, "Invalid Customer ID")
         print(customer.firstName , customer.current_video_rentals)
 
-    def new_customer(self,account_type,first_name,last_name,current_video_rentals =""):
+    def new_customer(self,account_type=input,first_name=input,last_name=input,current_video_rentals =""):
+        account_type=input("Ener sx for Standard account, Enter px for premium account: ")
+        first_name=input("Enter Customers First Name: ")
+        last_name = input("Enter Customers Last Name: ")
         #Duplicate ID's wont be an issue due to customers remaining in the database, with incrementing ID's.
         #this method immediately writes the new users data to the csv file.
         id =len(self.customers) +1
@@ -28,50 +32,59 @@ class VideoStore:
             writer = csv.writer(customers)
             writer.writerow([id,account_type,first_name,last_name,current_video_rentals])
 
-        #need to update the list of customers in the store everytime a new user is added.
+        #Update the list of customers in the store everytime a new user is added.
         self.customers = Customer.all_customers()
         print(f"New customer added: ID={id}, Name={first_name} {last_name}, Account Type={account_type}")
 
-    def rent_video(self,video_title, customer_id):
-            customer_id = str(customer_id)
+    def rent_video(self,video_title=input, customer_id=input):
+            customer_id = input("Enter the Customers ID: ")
+            #Formatted input so user can see the titles available to be rented
+            video_title = input(f"Titles Available : {self.available_movies()}")
             customer = self.customers[customer_id]
-            current_rentals = (customer.current_video_rentals.split("/"))
+            current_rentals = (customer.current_video_rentals)
             if customer.account_type == "Sx":
                 if len(current_rentals) == 1:
                     # handles cases where the user has no rentals in their name
                     if current_rentals[0] == "":
-                        customer.current_video_rentals = customer.current_video_rentals + "/" + video_title
                         '''
-                       #### implement method to check if the video is available, 
-                        as well as ability to update inventory ####
+                       #### implement ability to update inventory ####
                         # Implement method to update the csv file.
                         '''
-                        return f"{customer.firstName} is now renting {video_title}"
-                else: 
-                    print(f"Return {customer.current_video_rentals} before renting another title")
+                        print(f"{customer.firstName} is now renting {video_title}")
+                 
+                    else: 
+                        print(f"Return {customer.current_video_rentals} before renting another title")
             else: # is premium member
-                if len(customer.current_rentals) < 3:
-                    customer.current_video_rentals = customer.current_video_rentals + "/" + video_title
-                    return f"{customer.firstName} is now renting {video_title}"
+                if len(current_rentals) < 3:
+                    if current_rentals[0]== '':
+                        customer.current_video_rentals[0] = video_title
+                        print(f"{customer.firstName} is now renting {video_title}, all titles currently rented are {customer.current_video_rentals}")
+        
+                    else:
+                        customer.current_video_rentals = customer.current_video_rentals + [video_title]
+                        print(f"{customer.firstName} is now renting {video_title}, all titles currently rented are {customer.current_video_rentals}")
+                    '''
+                    Add method to update csv file with users current rentals
+                    '''
                 else:
                     print(f"Return one of the following titles before renting another: {customer.current_video_rentals}")
     
-    def return_video(self,video_title, customer_id):
-        customer_id = str(customer_id)
-
+    def return_video(self,video_title=input, customer_id=input):
+        customer_id = input("Enter Customers ID: ")
+        video_title=input("What title is being returned? ")
         if video_title in self.inventory:
+           # increment the invetory for the video title
             self.inventory[video_title].copies_available +=1
-        #NTS: Figure out how to catch all versions of walle ( WALL-E, wall-E etc) 
+        #Note to self: Figure out how to catch all versions of walle ( WALL-E, wall-E etc) 
 
             if video_title.title() in self.customers[customer_id].current_video_rentals:
+                #remove the title from the customers rentals.
                 self.customers[customer_id].current_video_rentals.remove(video_title.title())
-                print(self.customers[customer_id].current_video_rentals)
-                return f"{video_title} was returned by {self.customers[customer_id].firstName}"
+                print(f"{video_title} was returned by {self.customers[customer_id].firstName} and they are still in posession of the following titles: {self.customers[customer_id].current_video_rentals}")
             else:
-                return "Title not found in Customers current Rentals"
+                print( "Title not found in Customers current Rentals")
         else: 
-            return f"{video_title} not Found in Inventory"
-           # increment the invetory for the video title, remove the title from the customers rentals.
+            print(f"{video_title} not Found in Inventory")
     
     def available_movies(self):
         available_movies = []
