@@ -2,7 +2,7 @@ import unittest
 from classes.Blockbuster import VideoStore
 from classes.Inventory import Movie
 from classes.Customer import Customer
-
+## i was not able to create my own tests so i used CHATGPT to generate some... before i knew that that wasnt allowed :o! 
 
 class TestVideoStoreRunner(unittest.TestCase):
 
