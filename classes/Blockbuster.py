@@ -83,7 +83,7 @@ class VideoStore(Customer,Movie):
     def return_video(self,video_title=input, customer_id=input):
         customer_id = input("Enter Customers ID: ")
         video_title=input("What title is being returned? ")
-        formatted_title = video_title.title()
+        formatted_title = video_title.lower()
         if formatted_title in self.inventory:
            # increment the invetory for the video title
             self.inventory[formatted_title].copies_available +=1

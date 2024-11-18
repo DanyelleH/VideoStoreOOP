@@ -2,7 +2,7 @@ import csv
 class Movie:
     def __init__(self,id,title,copies_available):
         self.id=id
-        self.title=title
+        self.title=title.lower()
         self.copies_available = int(copies_available)
 
     @classmethod

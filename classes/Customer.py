@@ -3,11 +3,11 @@ import csv
 class Customer:
     def __init__(self,id,account_type,first_name,last_name,current_video_rentals):
         self.id = str(id)
-        self.account_type = account_type.title()
+        self.account_type = account_type.lower()
         self.firstName = first_name.title()
         self.lastName = last_name.title()
         #added split method to prevent having to worry about "/" in folowing functions
-        self.current_video_rentals = current_video_rentals.title().split("/")
+        self.current_video_rentals = current_video_rentals
     
     @classmethod
     def all_customers(cls):

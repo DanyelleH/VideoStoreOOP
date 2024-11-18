@@ -41,4 +41,5 @@ Classes:
                     
         def available_movies(self):
             returns title and copies available.
-        
+I had to frequently refactor functions to utilie different data structures.           
+When creating the tests, i utilized chat GPT because I coult no figure out how to test with input values.
