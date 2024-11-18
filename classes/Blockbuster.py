@@ -2,7 +2,7 @@ from classes.Inventory import Movie
 from classes.Customer import Customer
 import csv
 
-class VideoStore:
+class VideoStore(Customer,Movie):
     def __init__(self) -> None:
         self.customers = Customer.all_customers() # Key: Customer id Number  value: Customer object.
         self.inventory = Movie.all_movies() # Key: Movie Title   Value: Movie object
@@ -28,47 +28,51 @@ class VideoStore:
         #Duplicate ID's wont be an issue due to customers remaining in the database, with incrementing ID's.
         #this method immediately writes the new users data to the csv file.
         id =len(self.customers) +1
+        #Due to reading ssues when using class method, i decided to manually update the csv file when adding a new customer.
         with open("/Users/danyelleridley/GolfPlatoonImmersive/Module_1_Fundamentals/assessment-2/data/customers.csv", mode='a', newline="") as customers:
             writer = csv.writer(customers)
             writer.writerow([id,account_type,first_name,last_name,current_video_rentals])
-
+        new_customer = Customer(id,account_type,first_name,last_name,current_video_rentals)
         #Update the list of customers in the store everytime a new user is added.
-        self.customers = Customer.all_customers()
+        self.customers[id] = new_customer
+
         print(f"New customer added: ID={id}, Name={first_name} {last_name}, Account Type={account_type}")
 
     def rent_video(self,video_title=input, customer_id=input):
-            customer_id = input("Enter the Customers ID: ")
-            #Formatted input so user can see the titles available to be rented
-            video_title = input(f"Titles Available : {self.available_movies()}")
-            customer = self.customers[customer_id]
-            current_rentals = (customer.current_video_rentals)
-            if customer.account_type == "Sx":
-                if len(current_rentals) == 1:
-                    # handles cases where the user has no rentals in their name
-                    if current_rentals[0] == "":
-                        '''
-                       #### implement ability to update inventory ####
-                        # Implement method to update the csv file.
-                        '''
-                        print(f"{customer.firstName} is now renting {video_title}")
-                 
-                    else: 
-                        print(f"Return {customer.current_video_rentals} before renting another title")
-            else: # is premium member
-                if len(current_rentals) < 3:
-                    if current_rentals[0]== '':
-                        customer.current_video_rentals[0] = video_title
-                        print(f"{customer.firstName} is now renting {video_title}, all titles currently rented are {customer.current_video_rentals}")
+        customer_id = input("Enter the Customers ID: ")
+        if customer_id not in self.customers.keys():
+            print("Invalid Customer ID Number")
+            return
+         
+        #Formatted input so user can see the titles available to be rented
+        video_title = input(f"Titles Available : {self.available_movies()}")
+        customer =self.customers[customer_id]
         
-                    else:
-                        customer.current_video_rentals = customer.current_video_rentals + [video_title]
-                        print(f"{customer.firstName} is now renting {video_title}, all titles currently rented are {customer.current_video_rentals}")
-                    '''
-                    Add method to update csv file with users current rentals
-                    '''
-                else:
-                    print(f"Return one of the following titles before renting another: {customer.current_video_rentals}")
+        current_rentals = (customer.current_video_rentals)
+        if customer.account_type == "Sx":
+            # handles cases where the user has no rentals in their name
+            if len(current_rentals) == 1 and current_rentals[0]== "":
+                print(f"{customer.firstName} is now renting {video_title}")
+                customer.current_video_rentals = [video_title]
+            else:
+                print(f"Return {customer.current_video_rentals} before renting another title")
+                
+        else: # is premium member
+            if len(current_rentals) < 3:
+                if current_rentals[0]== '':
+                    customer.current_video_rentals= [video_title]
+                    print(f"{customer.firstName} is now renting {video_title}, all titles currently rented are {customer.current_video_rentals}")
     
+                else:
+                    customer.current_video_rentals = customer.current_video_rentals + [video_title]
+                    print(f"{customer.firstName} is now renting {video_title}, all titles currently rented are {customer.current_video_rentals}")
+            else:
+                print(f"Return one of the following titles before renting another: {customer.current_video_rentals}")
+                '''
+                Add method to update csv file with users current rentals
+                '''
+        self.save_to_customer_csv(customer)
+
     def return_video(self,video_title=input, customer_id=input):
         customer_id = input("Enter Customers ID: ")
         video_title=input("What title is being returned? ")

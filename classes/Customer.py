@@ -30,3 +30,20 @@ class Customer:
                 )
                 customers[customer.id] = customer
         return customers
+    
+    def save_to_customer_csv(self, customer):
+        updated_customers = []
+        with open("/Users/danyelleridley/GolfPlatoonImmersive/Module_1_Fundamentals/assessment-2/data/customers.csv", mode='r', newline="") as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                # Locate the row for the customer and update it
+                if row['id'] == customer.id:
+                    row['current_video_rentals'] = "/".join(customer.current_video_rentals)
+                updated_customers.append(row)
+
+        # Open the file again to overwrite with updated data
+        with open("/Users/danyelleridley/GolfPlatoonImmersive/Module_1_Fundamentals/assessment-2/data/customers.csv", mode='w', newline="") as file:
+            fieldnames = ["id", "account_type", "first_name", "last_name", "current_video_rentals"]
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
+            writer.writeheader()  # Write the header
+            writer.writerows(updated_customers)  # Write all rows
