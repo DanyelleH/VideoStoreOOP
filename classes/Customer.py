@@ -2,11 +2,12 @@ import csv
 
 class Customer:
     def __init__(self,id,account_type,first_name,last_name,current_video_rentals):
-        self.id = id
+        self.id = str(id)
         self.account_type = account_type.title()
         self.firstName = first_name.title()
         self.lastName = last_name.title()
-        self.current_video_rentals = current_video_rentals.title()
+        #added split method to prevent having to worry about "/" in folowing functions
+        self.current_video_rentals = current_video_rentals.title().split("/")
     
     @classmethod
     def all_customers(cls):
@@ -21,7 +22,7 @@ class Customer:
                     is assigned manually instead of args/kwargs.
                 '''
                 customer = Customer(
-                    id=row["id"],
+                    id= str(row["id"]),
                     account_type=row["account_type"],
                     first_name=row["first_name"],
                     last_name=row["last_name"],

@@ -1,3 +1,6 @@
+This file shows my initial thoughts while reading through the readme to get an idea of the layout.
+Throughout the project 've made comments where changes/improvements in this process were made.
+
 Pseudocode:
 Classes:
     -Customers
@@ -9,7 +12,7 @@ Classes:
         def access_invetory(self):
             return title and available_copies
 
-        def view_all_customers(self:
+        def view_all_customers self:
             return customer_id and first_name , last_name
 
         def customers_current_rentals(customer_id as input,)
