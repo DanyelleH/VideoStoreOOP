@@ -1,11 +1,7 @@
 from classes.Inventory import Movie
 from classes.Customer import Customer
 import csv
-'''
- - Video Store
-        def available_movies(self):
-            returns title and copies available.   
-'''
+
 class VideoStore:
     def __init__(self) -> None:
         self.customers = Customer.all_customers() # Key: Customer id Number  value: Customer object.
@@ -46,7 +42,7 @@ class VideoStore:
                     if current_rentals[0] == "":
                         customer.current_video_rentals = customer.current_video_rentals + "/" + video_title
                         '''
-                       #### implement method to check if the video is in the invetory, 
+                       #### implement method to check if the video is available, 
                         as well as ability to update inventory ####
                         # Implement method to update the csv file.
                         '''
@@ -77,3 +73,9 @@ class VideoStore:
             return f"{video_title} not Found in Inventory"
            # increment the invetory for the video title, remove the title from the customers rentals.
     
+    def available_movies(self):
+        available_movies = []
+        for title,movie in self.inventory.items():
+            if movie.copies_available !=0:
+                available_movies.append(title)
+        return available_movies
