@@ -2,7 +2,7 @@ from classes.Inventory import Movie
 from classes.Customer import Customer
 import csv
 
-class VideoStore(Customer,Movie):
+class VideoStore:
     def __init__(self) -> None:
         self.customers = Customer.all_customers() # Key: Customer id Number  value: Customer object.
         self.inventory = Movie.all_movies() # Key: Movie Title   Value: Movie object
@@ -35,6 +35,7 @@ class VideoStore(Customer,Movie):
         new_customer = Customer(id,account_type,first_name,last_name,current_video_rentals)
         #Update the list of customers in the store everytime a new user is added.
         self.customers[id] = new_customer
+        self.customers = Customer.all_customers()
 
         print(f"New customer added: ID={id}, Name={first_name} {last_name}, Account Type={account_type}")
 
