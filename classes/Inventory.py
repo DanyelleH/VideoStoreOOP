@@ -20,13 +20,3 @@ class Movie:
                 inventory[row["title"]] = movie
         return inventory
     
-    def save_to_inventory_csv(self):
-        with open("/Users/danyelleridley/GolfPlatoonImmersive/Module_1_Fundamentals/assessment-2/data/inventory.csv", mode="w", newline='') as inventory_file:
-            writer = csv.writer(inventory_file)
-            writer.writerow(["id","title","copies_available"])
-            for title, movie in self.inventory.items():
-                writer.writerow([
-                    movie.id,
-                    title,
-                    movie.copies_available
-                ])
