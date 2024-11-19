@@ -22,8 +22,11 @@ class VideoStore:
         print(customer.firstName , customer.current_video_rentals)
 
     def new_customer(self,account_type=input,first_name=input,last_name=input,current_video_rentals =""):
-        account_type=input("Ener sx for Standard account, Enter px for premium account: ")
-        first_name=input("Enter Customers First Name: ")
+        account_type=input("Ener sx for Standard account, Enter px for premium account: ").lower()
+        if account_type != "px" or account_type!= "sx":
+            print(" Invalid account type, please enter sx for Standard, or px for Premium account")
+            return
+        first_name = input("Enter Customers First Name: ")
         last_name = input("Enter Customers Last Name: ")
         #Duplicate ID's wont be an issue due to customers remaining in the database, with incrementing ID's.
         #this method immediately writes the new users data to the csv file.
