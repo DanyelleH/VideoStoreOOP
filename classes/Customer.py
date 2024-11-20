@@ -1,4 +1,7 @@
 import csv
+import os
+base_dir = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
+customer_path= os.path.join(base_dir, "data/customers.csv")
 
 class Customer:
     def __init__(self,id,account_type,first_name,last_name,current_video_rentals):
@@ -12,7 +15,7 @@ class Customer:
     @classmethod
     def all_customers(cls):
         customers = {} #Key: customer_id, Value = Dictionary of customers info
-        with open("/Users/danyelleridley/GolfPlatoonImmersive/Module_1_Fundamentals/assessment-2/data/customers.csv") as customer_file:
+        with open(customer_path) as customer_file:
             reader = csv.DictReader(customer_file)
             for row in reader:
                 '''

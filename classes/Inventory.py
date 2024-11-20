@@ -1,4 +1,7 @@
 import csv
+import os
+base_dir = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
+inventory_path= os.path.join(base_dir, "data/inventory.csv")
 class Movie:
     def __init__(self,id,title,copies_available):
         self.id=id
@@ -8,7 +11,7 @@ class Movie:
     @classmethod
     def all_movies(cls):
         inventory ={}
-        with open("/Users/danyelleridley/GolfPlatoonImmersive/Module_1_Fundamentals/assessment-2/data/inventory.csv") as invetory_file:
+        with open(inventory_path) as invetory_file:
             reader = csv.DictReader(invetory_file)
             for row in reader:
                 movie = Movie(

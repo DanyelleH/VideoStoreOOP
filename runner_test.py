@@ -72,21 +72,21 @@ class TestVideoStoreRunner(unittest.TestCase):
         customer_list = {id: f"{customer.firstName} {customer.lastName}" for id, customer in self.store.customers.items()}
         self.assertEqual(customer_list, expected_customers)
         
-   ##Couldn't figure out how to get test operational##     
-    # def test_return_video(self):
-    #     self.store = VideoStore()
+   #Couldn't figure out how to get test operational##     
+    def test_return_video(self):
+        self.store = VideoStore()
         
-    #     # Mock data for inventory
-    #     self.store.inventory = {
-    #         "Wall-E": Movie(id=1, title="Wall-E", copies_available=5),
-    #         "Inception": Movie(id=2, title="Inception", copies_available=3),
-    #     }
+        # Mock data for inventory
+        self.store.inventory = {
+            "Wall-E": Movie(id=1, title="Wall-E", copies_available=5),
+            "Inception": Movie(id=2, title="Inception", copies_available=3),
+        }
         
-    #     # Mock data for customers
-    #     self.store.customers = {
-    #         1: Customer(id=1, account_type="sx", first_name="Alice", last_name="Smith", current_video_rentals=["Wall-E"]),
-    #         2: Customer(id=2, account_type="px", first_name="Bob", last_name="Jones", current_video_rentals=[]),
-    #     }
+        # Mock data for customers
+        self.store.customers = {
+            1: Customer(id=1, account_type="sx", first_name="Alice", last_name="Smith", current_video_rentals=["Wall-E"]),
+            2: Customer(id=2, account_type="px", first_name="Bob", last_name="Jones", current_video_rentals=[]),
+        }
     
 if __name__ == "__main__":
     unittest.main()

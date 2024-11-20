@@ -1,7 +1,4 @@
 from classes.Blockbuster import VideoStore
-from classes.Inventory import Movie
-from classes.Customer import Customer
-
 #Creating the store provides user with available functions.
 store = VideoStore()
 running = True

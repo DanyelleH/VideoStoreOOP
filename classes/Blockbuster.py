@@ -1,6 +1,6 @@
-from classes.Inventory import Movie
-from classes.Customer import Customer
 import csv
+from classes.Inventory import Movie, inventory_path
+from classes.Customer import Customer, customer_path
 
 class VideoStore:
     def __init__(self) -> None:
@@ -32,7 +32,7 @@ class VideoStore:
         #this method immediately writes the new users data to the csv file.
         id =len(self.customers) +1
         #Due to reading ssues when using class method, i decided to manually update the csv file when adding a new customer.
-        with open("/Users/danyelleridley/GolfPlatoonImmersive/Module_1_Fundamentals/assessment-2/data/customers.csv", mode='a', newline="") as customers:
+        with open(customer_path, mode='a', newline="") as customers:
             writer = csv.writer(customers)
             writer.writerow([id,account_type,first_name,last_name,current_video_rentals])
         new_customer = Customer(id,account_type,first_name,last_name,current_video_rentals)
@@ -122,13 +122,13 @@ class VideoStore:
 
     def save_to_inventory_csv(self,movie_title):
         new_inventory = []
-        with open("/Users/danyelleridley/GolfPlatoonImmersive/Module_1_Fundamentals/assessment-2/data/inventory.csv", mode='r', newline="") as file:
+        with open(inventory_path, mode='r', newline="") as file:
             reader = csv.DictReader(file)
             for row in reader:
                 if row['title'] == movie_title:
                     row['copies_available'] = str(self.inventory[movie_title].copies_available)
                 new_inventory.append(row)
-        with open("/Users/danyelleridley/GolfPlatoonImmersive/Module_1_Fundamentals/assessment-2/data/inventory.csv", mode="w", newline='') as inventory_file:
+        with open(inventory_path, mode="w", newline='') as inventory_file:
             fieldnames=["id","title","copies_available"]
             writer= csv.DictWriter(inventory_file,fieldnames=fieldnames)
             writer.writeheader()
@@ -136,7 +136,7 @@ class VideoStore:
 
     def save_to_customer_csv(self, customer):
         updated_customers = []
-        with open("/Users/danyelleridley/GolfPlatoonImmersive/Module_1_Fundamentals/assessment-2/data/customers.csv", mode='r', newline="") as file:
+        with open(customer_path, mode='r', newline="") as file:
             reader = csv.DictReader(file)
             for row in reader:
                 # Locate the row for the customer and update it
@@ -145,7 +145,7 @@ class VideoStore:
                 updated_customers.append(row)
 
         # Open the file again to overwrite with updated data
-        with open("/Users/danyelleridley/GolfPlatoonImmersive/Module_1_Fundamentals/assessment-2/data/customers.csv", mode='w', newline="") as file:
+        with open(customer_path, mode='w', newline="") as file:
             fieldnames = ["id", "account_type", "first_name", "last_name", "current_video_rentals"]
             writer = csv.DictWriter(file, fieldnames=fieldnames)
             writer.writeheader()  
