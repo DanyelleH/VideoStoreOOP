@@ -23,7 +23,7 @@ class VideoStore:
 
     def new_customer(self,account_type=input,first_name=input,last_name=input,current_video_rentals =""):
         account_type=input("Ener sx for Standard account, Enter px for premium account: ").lower()
-        if account_type != "px" or account_type!= "sx":
+        if account_type != "px" and account_type!= "sx":
             print(" Invalid account type, please enter sx for Standard, or px for Premium account")
             return
         first_name = input("Enter Customers First Name: ")
