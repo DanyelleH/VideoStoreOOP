@@ -1,7 +1,7 @@
 import csv
 import os
 base_dir = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
-inventory_path= os.path.join(base_dir, "data/inventory.csv")
+inventory_path= os.path.join(base_dir, "MoviesDatabase/data/inventory.csv")
 class Movie:
     def __init__(self,id,title,copies_available):
         self.id=id

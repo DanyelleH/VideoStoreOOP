@@ -1,8 +1,8 @@
 import csv
 import os
 base_dir = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
-customer_path= os.path.join(base_dir, "data/customers.csv")
-import db_script
+customer_path= os.path.join(base_dir, "MoviesDatabase/data/customers.csv")
+# import db_script
 
 class Customer:
     def __init__(self,id,account_type,first_name,last_name,current_video_rentals):
